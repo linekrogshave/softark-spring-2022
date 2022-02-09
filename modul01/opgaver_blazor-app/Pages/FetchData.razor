@@ -1,0 +1,49 @@
+﻿@page "/fetchdata"
+
+@using todolist_blazor_app.Model
+@using todolist_blazor_app.Service
+
+@inject TodoListService service
+
+<PageTitle>Todo List Tasks</PageTitle>
+
+<h1>Todo List Tasks</h1>
+
+@if (tasks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Text</th>
+                <th>Done</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in tasks)
+            {
+                <tr>
+                    <td>@task.Id</td>
+                    <td>@task.Text</td>
+                    <td>@task.Done</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private TodoListTask[]? tasks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //string url = "https://krdo-todo.azurewebsites.net/api/tasks/";
+        //tasks = await Http.GetFromJsonAsync<TodoListTask[]>(url);
+
+        tasks = await service.GetTodoListTasks();
+    }
+}
