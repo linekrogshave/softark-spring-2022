@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Json;
 
-using Data; // Så vi kan tilføje TodoContext som DbContext
-using Service; // Så vi kan få fat i DataService
-using Model; // Så vi kan få fat i DataService
+using Data;
+using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,10 +39,11 @@ builder.Services.AddScoped<DataService>();
 // Her kan man styrer hvordan den laver JSON.
 builder.Services.Configure<JsonOptions>(options =>
 {
-  Console.WriteLine("Halløj");
-  Console.WriteLine(options);
-  options.SerializerOptions.ReferenceHandler = 
-    System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    // Super vigtig option! Den gør, at programmet ikke smider fejl
+    // når man returnerer JSON med objekter, der refererer til hinanden.
+    // (altså dobbelrettede associeringer)
+    options.SerializerOptions.ReferenceHandler = 
+        System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
 // Byg app'ens objekt
@@ -52,8 +52,9 @@ var app = builder.Build();
 // Seed data hvis nødvendigt
 using (var scope = app.Services.CreateScope())
 {
+    // Med scope kan man hente en service.
     var dataService = scope.ServiceProvider.GetRequiredService<DataService>();
-    dataService.SeedData();
+    dataService.SeedData(); // Fylder data på hvis databasen er tom.
 }
 
 // Sæt Swagger og alt det andet halløj op
