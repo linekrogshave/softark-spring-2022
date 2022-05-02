@@ -1,8 +1,10 @@
 namespace Sortering;
 
-public class InsertionSort {
+public class InsertionSort
+{
 
-	public static void Sort(int[] array) {
-		// TODO!
-	}
+    public static void Sort(int[] array)
+    {
+        // TODO!
+    }
 }
