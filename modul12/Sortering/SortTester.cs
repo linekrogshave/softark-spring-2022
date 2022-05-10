@@ -6,7 +6,7 @@ public class SortTester
 {
     public static void Run()
     {
-        int testSize = 60000;
+        int testSize = 100000;
         int Min = 0;
         int Max = 10000;
         Random randNum = new Random();

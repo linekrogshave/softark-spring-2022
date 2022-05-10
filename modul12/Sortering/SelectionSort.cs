@@ -1,13 +1,17 @@
 namespace Sortering;
 
-public class SelectionSort {
-    private static void Swap(int[] array, int i, int j) {
+public class SelectionSort
+{
+    private static void Swap(int[] array, int i, int j)
+    {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
-    
-    public static void Sort(int[] array) {
-        // TODO: Implement
+
+    public static void Sort(int[] array)
+    {
+        // TODO!
+        return;
     }
 }
