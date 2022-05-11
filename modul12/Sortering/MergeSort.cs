@@ -22,6 +22,7 @@ public static class MergeSort
     private static void Merge(int[] array, int low, int middle, int high)
     {
         // TODO!
+        return;
     }
 
 }
