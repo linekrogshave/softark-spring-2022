@@ -1,5 +1,6 @@
 namespace Sortering;
 
+
 public static class QuickSort
 {
 
@@ -22,11 +23,37 @@ public static class QuickSort
 
     private static int Partition(int[] array, int low, int high)
     {
+        int e = array[low];
+        int i = low + 1;
+        int j = high;
+
+        while( i <= j)
+        {
+            if (array[i] <= e)
+            {
+                i++;
+            }
+            else if(array[j] > e)
+            {
+                j--;
+            }
+            else
+            {
+                Swap(array, i, j);
+                i++;
+                j--;
+            }
+        }
+        Swap(array, low, j);
+        return j;
+
         // TODO!
+        return -1;
     }
 
     public static void Sort(int[] array)
     {
-        _quickSort(array, 0, array.Length - 1);
+        /*_quickSort(array, 0, array.Length - 1);*/
+        return;
     }
 }

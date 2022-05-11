@@ -23,8 +23,10 @@
 
         public User RemoveFirst()
         {
-            // TODO: Implement!
-            return null!;
+            Node node = first;
+            first = first.Next;
+
+            return node.Data;
         }
 
         public void RemoveUser(User user)
@@ -62,14 +64,52 @@
 
         public User GetLast()
         {
-            // TODO: Implement
-            return null!;
+            Node node = first;
+            bool found = false;
+
+            while(!found)
+            {
+                if(node.Next == null)
+                {
+                    found = true;
+                    node = node.Next;
+                }
+            }
+            return node.Data;
         }
 
         public int CountUsers()
         {
-            // TODO: Implement
-            return -1;
+            Node node = first;
+            int count = 0;
+
+            while (node != null)
+            {
+                count ++;
+                node = node.Next;
+            }
+            return count;
+        }
+
+         public bool Contains(User user)
+        {
+            Node node = first;
+
+            while(true)
+            {
+                if(node.Data.Equals(user)) 
+                {
+                    return true;
+                }
+                if(node.Next == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    node = node.Next;
+                }
+            }
         }
 
         public override String ToString()
