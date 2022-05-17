@@ -16,8 +16,10 @@ public class DummyAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+        // Vi fisker en header ud hvor key er "Authorization"
         var authHeader = Request.Headers["Authorization"].ToString();
 
+        // Vi tjekker efterfølgende på om "Authorization" findes, og på om dens value starte med "Password".
         if (authHeader != null && authHeader.StartsWith("Password", StringComparison.OrdinalIgnoreCase))
         {
             var password = authHeader.Substring("Password ".Length).Trim();
