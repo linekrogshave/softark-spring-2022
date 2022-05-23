@@ -1,0 +1,32 @@
+﻿@page "/"
+
+@inject IElPrisService ElPrisService
+
+<div class="card mt-4">
+    <h4 class="card-header">Velkommen til Elpriser</h4>
+    <div class="card-body">
+        <h6>Herunder er de seneste elspotpriser. De opdateres cirka kl. 13.00 med priserne for i morgen.</h6>
+        @if (loading)
+        {
+            <div class="spinner-border spinner-border-sm"></div>
+        }
+        @if (elpriser != null)
+        {
+            <p>Velkommen til Elpriser!</p>
+
+            // TODO: Vis noget data
+        }
+    </div>
+</div>
+
+@code {
+    private bool loading;
+    private IEnumerable<ElPris>? elpriser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        loading = true;
+        // TODO: Hent noget data
+        loading = false;
+    }
+}
