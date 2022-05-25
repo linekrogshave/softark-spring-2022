@@ -1,0 +1,76 @@
+@page "/login"
+@using System.ComponentModel.DataAnnotations
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="alert alert-info">
+        Brugernavn og Password er det som findes i API'en!
+    </div>
+    <div class="card">
+        <h4 class="card-header">Login via den sikre API!</h4>
+        <div class="card-body">
+            <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label>Username</label>
+                    <InputText @bind-Value="model.Username" class="form-control" />
+                    <ValidationMessage For="@(() => model.Username)" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <InputText @bind-Value="model.Password" type="password" class="form-control" />
+                    <ValidationMessage For="@(() => model.Password)" />
+                </div><br/>
+                <button class="btn btn-primary">
+                    Login
+                </button>
+                @if (!string.IsNullOrEmpty(error)) {
+                    <div class="alert alert-danger mt-3 mb-0">@error</div>
+                }
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Model model = new Model();
+    private bool loading = true;
+    private string error = "";
+
+    protected override void OnInitialized()
+    {
+        // Gå til forsiden hvis User allerede er sat
+        if (AuthenticationService.User != null)
+        {
+            NavigationManager.NavigateTo("");
+        }
+    }
+
+    private async void HandleValidSubmit()
+    {
+        loading = true;
+        try
+        {
+            await AuthenticationService.Login(model.Username, model.Password);
+
+            // Gå til forsiden efter login
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            error = e.Message;
+            loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private class Model
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+    }
+}
